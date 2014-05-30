@@ -1,0 +1,74 @@
+<div ng-controller="TaskController">
+    <form name="taskForm">
+        <input type="text" size="10" maxlength="10"
+            ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
+            ui-date="{ dateFormat: 'mm/dd/y' }" ng-model="currentDate"
+            placeholder="MM/DD/YYYY" required />
+        <input type="text" size="30" ng-model="currentName"
+            placeholder="I need to do..." required />
+        <input type="text" size="30" ng-model="currentDescription"
+            placeholder="Comments..." />
+        <select ng-model="currentPriority">
+            <option ng-repeat="p in priorities">{{ p }}</option>
+        </select>
+
+        <button ng-disabled="!taskForm.$valid" ng-click="add()">Add</button>
+    </form>
+
+    <p>TODO
+        <table>
+        	<tr ng-repeat="task in tasks | filter: { isVisible: true } | orderBy: 'date': false"
+        	    ng-style="setColor(task);" >
+                <td>
+                    <input type="checkbox" ng-model="status"
+                        ng-click="setIsDone(status, task);" >
+        	    </td>
+                <td ng-show="edit">
+                    <form name="editDate">
+                        <input type="text" size="10" maxlength="10"
+                            ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
+                            ui-date="{ dateFormat: 'mm/dd/y' }" ng-model="task.date"
+                            placeholder="task.date" required />
+                    </form>
+                </td>
+                <td ng-hide="edit">{{ task.date }}</td>
+                <td ng-show="edit">
+                    <input type="text" size="30" ng-model="task.name"
+                        placeholder="task.name" required />
+                </td>
+                <td ng-hide="edit">{{ task.name }}</td>
+                <td ng-show="edit">
+                    <input type="text" size="30" ng-model="task.description"
+                        placeholder="task.description" />
+                </td>
+                <td ng-hide="edit">{{ task.description }}</td>
+                <td>
+                    <select ng-model="task.priority">
+                        <option ng-repeat="p in priorities">{{ p }}</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="edit" ng-disabled="!editDate.$valid">
+                </td>
+                <td>
+                    <button ng-disabled="!editDate.$valid" ng-click="hide(task)">Hide</button>
+                </td>
+                <td>
+                    <button ng-click="remove(task)">X</button>
+                </td>
+            </tr>
+        </table>
+    </p>
+
+    <p>
+        <button ng-click="show()">Show all hidden tasks</button>
+    </p>
+</div>
+<!--     <p>DONE
+        <ul>
+            <li ng-repeat="task in doneTasks | orderBy: 'date': false"
+            ng-style="setColor(task);" >
+                {{ task.date }} {{ task.desc }}
+            </li>
+        </ul>
+    </p> -->
