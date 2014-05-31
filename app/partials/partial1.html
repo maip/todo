@@ -1,4 +1,4 @@
-<div ng-controller="TaskController">
+<body ng-controller="TaskController">
     <form name="taskForm">
         <input type="text" size="10" maxlength="10"
             ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
@@ -27,13 +27,15 @@
                         <input type="text" size="10" maxlength="10"
                             ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
                             ui-date="{ dateFormat: 'mm/dd/y' }" ng-model="task.date"
-                            placeholder="task.date" required />
+                            placeholder="{{ task.date.format('MM/DD/YYYY'); }}" required />
                     </form>
                 </td>
-                <td ng-hide="edit">{{ task.date }}</td>
+                <td ng-hide="edit">{{ task.date.format('MM/DD/YYYY') }}</td>
                 <td ng-show="edit">
-                    <input type="text" size="30" ng-model="task.name"
-                        placeholder="task.name" required />
+                    <form name="editName">
+                        <input type="text" size="30" ng-model="task.name"
+                            placeholder="task.name" required />
+                    </form>
                 </td>
                 <td ng-hide="edit">{{ task.name }}</td>
                 <td ng-show="edit">
@@ -43,11 +45,11 @@
                 <td ng-hide="edit">{{ task.description }}</td>
                 <td>
                     <select ng-model="task.priority">
-                        <option ng-repeat="p in priorities">{{ p }}</option>
+                        <option ng-repeat="p in priorities" ng-click="setPriority(task, p);">{{ p }}</option>
                     </select>
                 </td>
                 <td>
-                    <input type="checkbox" ng-model="edit" ng-disabled="!editDate.$valid">
+                    <input type="checkbox" ng-model="edit" ng-disabled="!editName.$valid">
                 </td>
                 <td>
                     <button ng-disabled="edit" ng-click="hide(task)">Hide</button>
@@ -59,7 +61,5 @@
         </table>
     </p>
 
-    <p>
-        <button ng-click="show()">Show all hidden tasks</button>
-    </p>
-</div>
+    <p><button ng-click="show()">Show all hidden tasks</button></p>
+</body>

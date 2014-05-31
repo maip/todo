@@ -33,5 +33,6 @@ body { margin: 50px auto auto 50px; }
 
 .low { color: green; }
 .medium { color: orange; }
-.high { color: red; }
+.high { color: maroon; }
+.overdue { color: red; }
 .done { color: lime; }
