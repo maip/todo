@@ -12,6 +12,12 @@ angular.module('myApp.controllers', ['myApp.services'])
         { date: '06/03/2014', name: 'Make bed', description: 'By 10am',
           priority: 'low', isDone: false, isVisible: true }
       ];
+      $scope.currentDate = '';
+      $scope.currentName = '';
+      $scope.currentDescription = '';
+      $scope.currentPriority = 'high';
+      $scope.priorities = ['high', 'medium', 'low'];
+
       $scope.setColor = function(task) {
         if (task.isDone) {
           return { color: 'lime' };
@@ -23,6 +29,7 @@ angular.module('myApp.controllers', ['myApp.services'])
           return { color: 'green' };
       	}
       };
+
       $scope.setIsDone = function(status, task) {
         // var index = $scope.tasks.indexOf(task);
         // if (index > -1) {
@@ -34,15 +41,9 @@ angular.module('myApp.controllers', ['myApp.services'])
         } else {
           task.isDone = false;
         }
-      }
+      };
 
-      $scope.currentDate = '';
-      $scope.currentName = '';
-      $scope.currentDescription = '';
-      $scope.currentPriority = 'high';
-      $scope.priorities = ['high', 'medium', 'low'];
-
-      $scope.add = function add() {
+      $scope.add = function() {
       	$scope.tasks.unshift({
       		date: $scope.currentDate,
           name: $scope.currentName,
@@ -55,21 +56,24 @@ angular.module('myApp.controllers', ['myApp.services'])
         $scope.currentName = '';
         $scope.currentDescription = '';
       };
-      $scope.show = function show() {
+
+      $scope.show = function() {
         for (var index in $scope.tasks) {
           var task = $scope.tasks[index];
           if (!task.isVisible) {
             task.isVisible = true;
           }
         }
-      }
-      $scope.hide = function hide(task) {
+      };
+
+      $scope.hide = function(task) {
         task.isVisible = false;
-      }
-      $scope.remove = function remove(task) {
+      };
+      
+      $scope.remove = function(task) {
         var index = $scope.tasks.indexOf(task);
         if (index > -1) {
           $scope.tasks.splice(index, 1);
         }
-      }
+      };
   	}]);
