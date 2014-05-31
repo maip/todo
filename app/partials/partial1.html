@@ -1,4 +1,4 @@
-<div ng-controller="TaskController">  
+<div ng-controller="TaskController">
     <form name="taskForm">
         <input type="text" size="10" maxlength="10"
             ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
@@ -20,8 +20,7 @@
         	<tr ng-repeat="task in tasks | filter: { isVisible: true } | orderBy: 'date': false"
         	    ng-style="setColor(task);" >
                 <td>
-                    <input type="checkbox" ng-model="status"
-                        ng-click="setIsDone(status, task);" >
+                    <input type="checkbox" ng-model="task.isDone">
         	    </td>
                 <td ng-show="edit">
                     <form name="editDate">
@@ -51,7 +50,7 @@
                     <input type="checkbox" ng-model="edit" ng-disabled="!editDate.$valid">
                 </td>
                 <td>
-                    <button ng-disabled="!editDate.$valid" ng-click="hide(task)">Hide</button>
+                    <button ng-disabled="edit" ng-click="hide(task)">Hide</button>
                 </td>
                 <td>
                     <button ng-click="remove(task)">X</button>
@@ -64,11 +63,3 @@
         <button ng-click="show()">Show all hidden tasks</button>
     </p>
 </div>
-<!--     <p>DONE
-        <ul>
-            <li ng-repeat="task in doneTasks | orderBy: 'date': false"
-            ng-style="setColor(task);" >
-                {{ task.date }} {{ task.desc }}
-            </li>
-        </ul>
-    </p> -->

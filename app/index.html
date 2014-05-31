@@ -24,7 +24,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   
-  <h1>Today is <span id="now"></span></h1>
+  <h1><span id="now"></span></h1>
   <div ng-view></div>
 
   <!-- In production use:
@@ -46,7 +46,7 @@
       var now = $('#now'),
       date = moment(),
       update = function(){
-        now.html(date.format('dddd, ll'));
+        now.html(date.format('ddd, ll'));
       };
       update();
       setInterval(update, 1);

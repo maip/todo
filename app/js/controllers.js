@@ -29,20 +29,7 @@ angular.module('myApp.controllers', ['myApp.services'])
           return { color: 'green' };
       	}
       };
-
-      $scope.setIsDone = function(status, task) {
-        // var index = $scope.tasks.indexOf(task);
-        // if (index > -1) {
-        //   $scope.tasks.splice(index, 1);
-        // }
-        // $scope.doneTasks.push(task);
-        if (!status) {
-          task.isDone = true;
-        } else {
-          task.isDone = false;
-        }
-      };
-
+      
       $scope.add = function() {
       	$scope.tasks.unshift({
       		date: $scope.currentDate,
