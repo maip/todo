@@ -30,6 +30,15 @@
 }
 
 body { margin: 50px auto auto 50px; }
+table
+{
+table-layout:fixed;
+}
+
+.cola { width: 25px; }
+.colb { width: 125px; }
+.colc { width: 275px; }
+
 
 .low { color: green; }
 .medium { color: orange; }

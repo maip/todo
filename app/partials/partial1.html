@@ -16,13 +16,16 @@
     </form>
 
     <p>TODO
-        <table width="700">
+        <table width="1000">
+            <col class="cola">
+            <col class="colb">
+            <col class="colc">
         	<tr ng-repeat="task in tasks | filter: { isVisible: true } | orderBy: 'parsedDate': false"
         	    ng-style="setColor(task);" >
-                <td>
+                <td class="a">
                     <input type="checkbox" ng-model="task.isDone">
         	    </td>
-                <td ng-show="edit">
+                <td class="b" ng-show="edit">
                     <form name="editDate">
                         <input id="test" type="text" size="10" maxlength="10"
                             ng-pattern='/^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/(199\d|[2-9]\d{3})$/'
@@ -30,31 +33,25 @@
                             placeholder="{{ task.parsedDate.format('MM/DD/YYYY'); }}" required />
                     </form>
                 </td>
-                <td ng-hide="edit">{{ task.parsedDate.format('MM/DD/YYYY') }}</td>
-                <td ng-show="edit">
+                <td class="b" ng-hide="edit">{{ task.parsedDate.format('MM/DD/YYYY') }}</td>
+                <td class="c" ng-show="edit">
                     <form name="editName">
                         <input type="text" size="30" ng-model="task.name"
                             placeholder="task.name" required />
                     </form>
                 </td>
-                <td ng-hide="edit">{{ task.name }}</td>
-                <td ng-show="edit">
+                <td class="c" ng-hide="edit">{{ task.name }}</td>
+                <td class="c" ng-show="edit">
                     <input type="text" size="30" ng-model="task.description"
                         placeholder="task.description" />
                 </td>
-                <td ng-hide="edit">{{ task.description }}</td>
-                <td>
+                <td class="c" ng-hide="edit">{{ task.description }}</td>
+                <td ng-style="{ color: 'black' }">
                     <select ng-model="task.priority">
                         <option ng-repeat="p in priorities" ng-click="setPriority(task, p);">{{ p }}</option>
                     </select>
-                </td>
-                <td>
-                    <input type="checkbox" ng-model="edit" ng-disabled="!editName.$valid" ng-change="updateDate(task);">
-                </td>
-                <td>
+                    Edit <input type="checkbox" ng-model="edit" ng-disabled="!editName.$valid" ng-change="updateDate(task);">
                     <button ng-disabled="!task.isDone" ng-click="hide(task)">Hide</button>
-                </td>
-                <td>
                     <button ng-click="remove(task)">X</button>
                 </td>
             </tr>

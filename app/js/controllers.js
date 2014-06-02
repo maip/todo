@@ -39,9 +39,9 @@ angular.module('myApp.controllers', ['myApp.services'])
       $scope.setPriority = function(task, p) {
         if (p === 'auto') {
           var diff = task.parsedDate.diff(moment(), 'days');
-          if (diff == 0 || diff == 1) {
+          if (diff == 0) {
             task.priority = 'high';
-          } else if (diff > 1 && diff <= 7) {
+          } else if (diff >= 1 && diff <= 7) {
             task.priority = 'medium';
           } else if (diff > 7) {
             task.priority = 'low';
