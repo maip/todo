@@ -5,16 +5,17 @@
 angular.module('myApp.controllers', ['myApp.services'])
 	.controller('TaskController', ['$scope', function($scope) {
       $scope.tasks = [
-        { date: moment('06/01/2014', 'MM/DD/YYYY'), name: 'Do laundry',
+        { date: '06/01/2014', parsedDate: moment('06/01/2014', 'MM/DD/YYYY'), name: 'Do laundry',
           description: 'Whites only', priority: 'high',
           isDone: false, isVisible: true },
-        { date: moment('06/02/2014', 'MM/DD/YYYY'), name: 'Wash dishes',
+        { date: '06/02/2014', parsedDate: moment('06/02/2014', 'MM/DD/YYYY'), name: 'Wash dishes',
           description: 'Handwash pots', priority: 'medium',
           isDone: false, isVisible: true },
-        { date: moment('06/03/2014', 'MM/DD/YYYY'), name: 'Make bed',
+        { date: '06/03/2014', parsedDate: moment('06/03/2014', 'MM/DD/YYYY'), name: 'Make bed',
           description: 'By 10am', priority: 'low',
           isDone: false, isVisible: true }
       ];
+      $scope.hiddenTasks = [];
       $scope.currentDate = '';
       $scope.currentName = '';
       $scope.currentDescription = '';
@@ -37,7 +38,7 @@ angular.module('myApp.controllers', ['myApp.services'])
 
       $scope.setPriority = function(task, p) {
         if (p === 'auto') {
-          var diff = task.date.diff(moment(), 'days');
+          var diff = task.parsedDate.diff(moment(), 'days');
           if (diff == 0 || diff == 1) {
             task.priority = 'high';
           } else if (diff > 1 && diff <= 7) {
@@ -50,8 +51,9 @@ angular.module('myApp.controllers', ['myApp.services'])
         }
       };
 
-      $scope.getDate = function (task) {
-        return task.date.format('MM/DD/YYYY');
+      $scope.updateDate = function(task) {
+        task.parsedDate = moment(task.date, 'MM/DD/YYYY');
+        $scope.setPriority(task, 'auto');
       };
 
       $scope.add = function() {
@@ -70,7 +72,8 @@ angular.module('myApp.controllers', ['myApp.services'])
           }
         }
       	$scope.tasks.unshift({
-      		date: parsedDate,
+          date: $scope.currentDate,
+      		parsedDate: parsedDate,
           name: $scope.currentName,
           description: $scope.currentDescription,
       		priority: priorityAuto,
@@ -92,9 +95,20 @@ angular.module('myApp.controllers', ['myApp.services'])
       };
 
       $scope.hide = function(task) {
+        $scope.hiddenTasks.unshift(task);
         task.isVisible = false;
       };
-      
+
+      $scope.rehide = function() {
+        for (var index in $scope.hiddenTasks) {
+          var i = $scope.tasks.indexOf($scope.hiddenTasks[index]);
+          if (i > -1) {
+            var task = $scope.tasks[i];
+            task.isVisible = false;
+          }
+        }
+      };
+
       $scope.remove = function(task) {
         var index = $scope.tasks.indexOf(task);
         if (index > -1) {
